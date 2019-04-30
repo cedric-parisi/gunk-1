@@ -1,0 +1,84 @@
+package auth
+
+import (
+	"github.com/gunk/opt/http"
+	"github.com/gunk/opt/openapiv2"
+)
+
+// GetAuthorizationCodeRequest is the request envelope to retrieve an authorization code.
+type GetAuthorizationCodeRequest struct {
+	// ClientID is your identifier provided during the registration process.
+	ClientID string `pb:"1" json:"client_id"`
+	// RedirectURI must match one of the URLs you have provided during the registration process.
+	RedirectURI string `pb:"2" json:"redirect_uri"`
+}
+
+// Empty is an empty response.
+type Empty struct{}
+
+// GrantType defines the grant type when requesting a token.
+type GrantType int
+
+const (
+	_ GrantType = iota
+	// AuthorizationCode is the grant type used to exchange an authorization code with an access token.
+	AuthorizationCode
+	// RefreshToken is the grant type used to refresh an access token.
+	RefreshToken
+)
+
+// CreateAccessTokenRequest is the request evelope to either exchange an authorization code with an access token or refresh a token.
+type CreateAccessTokenRequest struct {
+	// GrantType is an enum to defines which operation to perform.
+	GrantType GrantType `pb:"1" json:"grant_type"`
+	// Code is the authorization code previously received from the authorization server.
+	Code string `pb:"2" json:"code"`
+	// RedirectURI must match RedirectURI you have provided for the autorization code request.
+	// Required only when GrantType is equal to "authorization_code".
+	RedirectURI string `pb:"3" json:"redirect_uri"`
+	// RefreshToken is the refresh token previously issued to the client.
+	// Required only when GrantType is equal to "refresh_token"
+	RefreshToken string `pb:"4" json:"refresh_token"`
+}
+
+// CreateAccessTokenResponse is the response envelope containing the access token.
+type CreateAccessTokenResponse struct {
+	// AccessToken issued by the authorization server.
+	AccessToken string `pb:"1" json:"access_token"`
+	// TokenType is the type of the token, always "bearer".
+	TokenType string `pb:"2" json:"token_type"`
+	// ExpiresIn is the duration in seconds that the access token remains valid.
+	ExpiresIn int `pb:"3" json:"expires_in"`
+	// RefreshToken is the token to renew an expired access token.
+	RefreshToken string `pb:"4" json:"refresh_token"`
+}
+
+// AuthorizationService provides authorization operations.
+type AuthorizationService interface {
+	// GetAuthorizationCode creates an authorization code.
+	//
+	// +gunk http.Match{
+	//         Method: "GET",
+	//         Path:   "/v1/auth",
+	// }
+	// +gunk openapiv2.Operation{
+	//         Tags:        []string{"Authorization"},
+	//         Description: "First you need to retrieve an authorization code.",
+	//         Summary:     "Retrieve an authorization code.",
+	// }
+	GetAuthorizationCode(GetAuthorizationCodeRequest) Empty
+
+	// CreateAccessToken exchanges an authorization code with an access token.
+	//
+	// +gunk http.Match{
+	//         Method: "POST",
+	//         Path:   "/v1/token",
+	//         Body:   "*",
+	// }
+	// +gunk openapiv2.Operation{
+	//         Tags:        []string{"Authorization"},
+	//         Description: "Then you can exchange the authorization code with an access token. This endpoint is also used to refresh your tokens.",
+	//         Summary:     "Retrieve an access token.",
+	// }
+	CreateAccessToken(CreateAccessTokenRequest) CreateAccessTokenResponse
+}
