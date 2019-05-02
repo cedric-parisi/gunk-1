@@ -5,63 +5,63 @@ import (
 	"github.com/gunk/opt/openapiv2"
 )
 
-// Account holds all details about a bank account
+// Account holds all details about a bank account.
 type Account struct {
-	// AccountID is the unique identifier of an account
+	// AccountID is the unique identifier of an account.
 	AccountID string `pb:"1" json:"account_id"`
-	// FirstName is the firstname of the account owner
+	// FirstName is the firstname of the account owner.
 	FirstName string `pb:"2" json:"first_name"`
 }
 
-// GetAccountRequest is the request envelope to get an account by its identifier
+// GetAccountRequest is the request envelope to get an account by its identifier.
 type GetAccountRequest struct {
 	AccountID string `pb:"1" json:"account_id"`
 }
 
-// GetAccountsRequest is the request envelope to get a list of filtered accounts
+// GetAccountsRequest is the request envelope to get a list of filtered accounts.
 type GetAccountsRequest struct {
 	// NextStartingIndex is a cursor for pagination. It's an AccountID that defines
-	// the current place in the total list of Accounts
+	// the current place in the total list of Accounts.
 	NextStartingIndex string `pb:"1" json:"next_starting_index"`
 }
 
-// GetAccountsResponse wraps the list of accounts
+// GetAccountsResponse wraps the list of accounts.
 type GetAccountsResponse struct {
-	// Result is a list containing up to 20 Accounts
+	// Result is a list containing up to 20 Accounts.
 	Result []Account `pb:"1" json:"result"`
-	// HasMore indicates if there are more accounts available
+	// HasMore indicates if there are more accounts available.
 	HasMore bool `pb:"2" json:"has_more"`
 }
 
-// CreateAccountRequest wraps all required fields for an account creation
+// CreateAccountRequest wraps all required fields for an account creation.
 type CreateAccountRequest struct {
-	// FirstName is the firstname of the account owner
+	// FirstName is the firstname of the account owner.
 	FirstName string `pb:"1" json:"first_name"`
 }
 
-// CreateAccountResponse is the response envelope for an account creation
+// CreateAccountResponse is the response envelope for an account creation.
 type CreateAccountResponse struct {
-	// AccountID is the unique identifier of the newly created account
+	// AccountID is the unique identifier of the newly created account.
 	AccountID string `pb:"1" json:"account_id"`
 }
 
-// UpdateAccountRequest wraps all fields available for update
+// UpdateAccountRequest wraps all fields available for update.
 type UpdateAccountRequest struct {
-	// AccountID is the unique identifier of the account to update
+	// AccountID is the unique identifier of the account to update.
 	AccountID string `pb:"1" json:"account_id"`
-	// FirstName is the firstname of the account owner
+	// FirstName is the firstname of the account owner.
 	FirstName string `pb:"2" json:"first_name"`
 }
 
-// DeleteAccountRequest is the request envelope to delete an account
+// DeleteAccountRequest is the request envelope to delete an account.
 type DeleteAccountRequest struct {
-	// AccountID is the unique identifier of the account to delete
+	// AccountID is the unique identifier of the account to delete.
 	AccountID string `pb:"1" json:"account_id"`
 }
 
 // AccountService provides Account operations.
 type AccountService interface {
-	// GetAccountByID retrieves the detail of an account, selected by its id
+	// GetAccount retrieves the detail of an account, selected by its id.
 	//
 	// +gunk http.Match{
 	//         Method: "GET",
@@ -72,9 +72,9 @@ type AccountService interface {
 	//         Description: "Retrieves all data from an account, selected by the account_id you supplied.",
 	//         Summary:     "Retrieve an account",
 	// }
-	GetAccountByID(GetAccountRequest) Account
+	GetAccount(GetAccountRequest) Account
 
-	// GetAccounts returns a list containing up to 20 accounts
+	// GetAccounts returns a list containing up to 20 accounts.
 	//
 	// +gunk http.Match{
 	//         Method: "GET",
@@ -87,7 +87,7 @@ type AccountService interface {
 	// }
 	GetAccounts(GetAccountsRequest) GetAccountsResponse
 
-	// CreateAccount creates a new account and return its id
+	// CreateAccount creates a new account and return its id.
 	//
 	// +gunk http.Match{
 	//         Method: "POST",
@@ -101,7 +101,7 @@ type AccountService interface {
 	// }
 	CreateAccount(CreateAccountRequest) CreateAccountResponse
 
-	// UpdateAccount updates an account
+	// UpdateAccount updates an account.
 	//
 	// +gunk http.Match{
 	//         Method: "PUT",
@@ -115,7 +115,7 @@ type AccountService interface {
 	// }
 	UpdateAccount(UpdateAccountRequest)
 
-	// DeleteAccount deletes an account
+	// DeleteAccount deletes an account.
 	//
 	// +gunk http.Match{
 	//         Method: "DELETE",
