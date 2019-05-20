@@ -1,0 +1,142 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "auth",
+    "version": "0.1.0"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/auth": {
+      "get": {
+        "summary": "Retrieve an authorization code.",
+        "description": "First you need to retrieve an authorization code.",
+        "operationId": "GetAuthorizationCode",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/authEmpty"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ClientID",
+            "description": "ClientID is your identifier provided during the registration process.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "RedirectURI",
+            "description": "RedirectURI must match one of the URLs you have provided during the registration process.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/v1/token": {
+      "post": {
+        "summary": "Retrieve an access token.",
+        "description": "Then you can exchange the authorization code with an access token. This endpoint is also used to refresh your tokens.",
+        "operationId": "CreateAccessToken",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/authCreateAccessTokenResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authCreateAccessTokenRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "authCreateAccessTokenRequest": {
+      "type": "object",
+      "properties": {
+        "GrantType": {
+          "$ref": "#/definitions/authGrantType",
+          "description": "GrantType is an enum to defines which operation to perform."
+        },
+        "Code": {
+          "type": "string",
+          "description": "Code is the authorization code previously received from the authorization server."
+        },
+        "RedirectURI": {
+          "type": "string",
+          "description": "RedirectURI must match RedirectURI you have provided for the autorization code request.\nRequired only when GrantType is equal to \"authorization_code\"."
+        },
+        "RefreshToken": {
+          "type": "string",
+          "title": "RefreshToken is the refresh token previously issued to the client.\nRequired only when GrantType is equal to \"refresh_token\""
+        }
+      },
+      "description": "CreateAccessTokenRequest is the request evelope to either exchange an authorization code with an access token or refresh a token."
+    },
+    "authCreateAccessTokenResponse": {
+      "type": "object",
+      "properties": {
+        "AccessToken": {
+          "type": "string",
+          "description": "AccessToken issued by the authorization server."
+        },
+        "TokenType": {
+          "type": "string",
+          "description": "TokenType is the type of the token, always \"bearer\"."
+        },
+        "ExpiresIn": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ExpiresIn is the duration in seconds that the access token remains valid."
+        },
+        "RefreshToken": {
+          "type": "string",
+          "description": "RefreshToken is the token to renew an expired access token."
+        }
+      },
+      "description": "CreateAccessTokenResponse is the response envelope containing the access token."
+    },
+    "authEmpty": {
+      "type": "object",
+      "description": "Empty is an empty response."
+    },
+    "authGrantType": {
+      "type": "string",
+      "enum": [
+        "_",
+        "AuthorizationCode",
+        "RefreshToken"
+      ],
+      "default": "_",
+      "description": "GrantType defines the grant type when requesting a token.\n\n - AuthorizationCode: GrantType_AuthorizationCode is the grant type used to exchange an authorization code with an access token.\n - RefreshToken: GrantType_RefreshToken is the grant type used to refresh an access token."
+    }
+  }
+}
