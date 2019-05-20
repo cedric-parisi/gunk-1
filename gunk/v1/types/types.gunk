@@ -1,0 +1,9 @@
+package types
+
+// Amount defines a transaction amount.
+type Amount struct {
+	// Cur is the currency of the amount.
+	Cur string `pb:"1" json:"cur"`
+	// Num is the value of the amount.
+	Num string `pb:"2" json:"num"`
+}
