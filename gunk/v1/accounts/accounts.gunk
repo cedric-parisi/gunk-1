@@ -7,36 +7,6 @@ import (
 	types "github.com/openbank/gunk/gunk/v1/types"
 )
 
-// MajorType describes the type of the account.
-type MajorType int
-
-const (
-	_ MajorType = iota
-	// Checking account.
-	Checking
-	// Saving account.
-	Saving
-	// TimeDeposit for a time deposit account.
-	TimeDeposit
-	// CommercialLoan for a business loan account.
-	CommercialLoan
-	// MortgageLoan for a home loan account.
-	MortgageLoan
-	// ConsumerLoan for a consumer loan account.
-	ConsumerLoan
-)
-
-// MajorCategory describes the category of the account.
-type MajorCategory int
-
-const (
-	_ MajorCategory = iota
-	// Dep for deposit category.
-	Dep
-	// Loan for loan category.
-	Loan
-)
-
 // Account holds all details about a bank account.
 type Account struct {
 	// AccountID is the unique identifier of an account.
@@ -72,9 +42,9 @@ type Account struct {
 	// TODO: add comment.
 	InterestRate string `pb:"16" json:"interest_rate"`
 	// MajorType is the account type.
-	MajorType MajorType `pb:"17" json:"major_type"`
+	MajorType types.MajorType `pb:"17" json:"major_type"`
 	// MajorCategory is the account category.
-	MajorCategory MajorCategory `pb:"18" json:"major_category"`
+	MajorCategory types.MajorCategory `pb:"18" json:"major_category"`
 	// MaturityDate is the maturity date, format is ISO 8601
 	MaturityDate string `pb:"19" json:"maturity_date"`
 	// TODO: add comment.
@@ -154,8 +124,8 @@ type CreateAccountRequest struct {
 	DebitTransaction DebitTransaction `pb:"6" json:"debit_transaction"`
 	// TODO: add comment.
 	InterestRate string `pb:"7" json:"interest_rate"`
-	// MajortType is the type of the account.
-	MajorType MajorType `pb:"8" json:"major_type"`
+	// MajorType is the type of the account.
+	MajorType types.MajorType `pb:"8" json:"major_type"`
 	// TODO: add comment.
 	MaturityDate string `pb:"9" json:"maturity_date"`
 	// TODO: add comment.
@@ -171,7 +141,7 @@ type CreateAccountResponse struct {
 	// DebitTransactionNumber is the transaction number of the debited account.
 	DebitTransactionNumber string `pb:"3" json:"debit_transaction_number"`
 	// MajorType is the type of the account.
-	MajorType MajorType `pb:"4" json:"major_type"`
+	MajorType types.MajorType `pb:"4" json:"major_type"`
 	// TODO: add comment.
 	Minor string `pb:"5" json:"minor"`
 }
