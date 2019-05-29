@@ -1,11 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "accounts",
-    "version": "0.1.0"
+    "title": "Accounts API",
+    "description": "Provides CRUD operations on the accounts resource.",
+    "version": "1.0.0"
   },
+  "basePath": "/v1",
   "schemes": [
-    "http",
     "https"
   ],
   "consumes": [
@@ -22,10 +23,26 @@
         "operationId": "GetAccounts",
         "responses": {
           "200": {
-            "description": "",
+            "description": "Request executed successfully.",
             "schema": {
               "$ref": "#/definitions/accountsGetAccountsResponse"
             }
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -39,6 +56,13 @@
         ],
         "tags": [
           "Account"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "read"
+            ]
+          }
         ]
       },
       "post": {
@@ -47,10 +71,32 @@
         "operationId": "CreateAccount",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/accountsCreateAccountResponse"
             }
+          },
+          "201": {
+            "description": "Account created successfully.",
+            "schema": {
+              "$ref": "#/definitions/accountsCreateAccountResponse"
+            }
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -65,6 +111,13 @@
         ],
         "tags": [
           "Account"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "write"
+            ]
+          }
         ]
       }
     },
@@ -75,10 +128,30 @@
         "operationId": "GetAccount",
         "responses": {
           "200": {
-            "description": "",
+            "description": "Request executed successfully.",
             "schema": {
               "$ref": "#/definitions/accountsAccount"
             }
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource is not found.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -91,6 +164,13 @@
         ],
         "tags": [
           "Account"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "read"
+            ]
+          }
         ]
       },
       "delete": {
@@ -99,10 +179,30 @@
         "operationId": "DeleteAccount",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protobufEmpty"
+              "properties": {}
             }
+          },
+          "204": {
+            "description": "Account deleted successfully.",
+            "schema": {}
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -116,6 +216,13 @@
         ],
         "tags": [
           "Account"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "write"
+            ]
+          }
         ]
       },
       "put": {
@@ -124,10 +231,30 @@
         "operationId": "UpdateAccount",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protobufEmpty"
+              "properties": {}
             }
+          },
+          "204": {
+            "description": "Account updated successfully.",
+            "schema": {}
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -149,6 +276,13 @@
         ],
         "tags": [
           "Account"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "write"
+            ]
+          }
         ]
       }
     }
@@ -406,9 +540,6 @@
       },
       "description": "UpdateAccountRequest wraps all fields available for update."
     },
-    "protobufEmpty": {
-      "type": "object"
-    },
     "typesAmount": {
       "type": "object",
       "properties": {
@@ -446,6 +577,19 @@
       ],
       "default": "_",
       "description": "MajorType describes the type of the account.\n\n - Checking: MajorType_Checking account.\n - Saving: MajorType_Saving account.\n - TimeDeposit: MajorType_TimeDeposit for a time deposit account.\n - CommercialLoan: MajorType_CommercialLoan for a business loan account.\n - MortgageLoan: MajorType_MortgageLoan for a home loan account.\n - ConsumerLoan: MajorType_ConsumerLoan for a consumer loan account."
+    }
+  },
+  "securityDefinitions": {
+    "OAuth2": {
+      "type": "oauth2",
+      "description": "Access to accounts resources is restricted to authenticated users. The authentication process follows the Authorization Code flow.",
+      "flow": "accessCode",
+      "authorizationUrl": "/v1/auth",
+      "tokenUrl": "/v1/token",
+      "scopes": {
+        "read": "Grants read access",
+        "write": "Grants write access"
+      }
     }
   }
 }

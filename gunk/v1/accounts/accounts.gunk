@@ -1,3 +1,52 @@
+// +gunk openapiv2.Swagger{
+//         Swagger: "2.0",
+//         Info: openapiv2.Info{
+//                 Title:       "Accounts API",
+//                 Description: "Provides CRUD operations on the accounts resource.",
+//                 Version:     "1.0.0",
+//         },
+//         BasePath: "/v1",
+//         Schemes: []openapiv2.SwaggerScheme{
+//                 openapiv2.HTTPS,
+//         },
+//         Consumes: []string{
+//                 "application/json",
+//         },
+//         Produces: []string{
+//                 "application/json",
+//         },
+//         Responses: map[string]openapiv2.Response{
+//                 "400": openapiv2.Response{
+//                         Description: "Returned when the request body is malformatted or does not match the expected request.",
+//                 },
+//                 "401": openapiv2.Response{
+//                         Description: "Returned when the request does not contains the user's credentials.",
+//                 },
+//                 "403": openapiv2.Response{
+//                         Description: "Returned when the user does not have permission to access the resource.",
+//                 },
+//                 "500": openapiv2.Response{
+//                         Description: "Returned when an unexpected error occured on the server side.",
+//                 },
+//         },
+//         SecurityDefinitions: openapiv2.SecurityDefinitions{
+//                 Security: map[string]openapiv2.SecurityScheme{
+//                         "OAuth2": openapiv2.SecurityScheme{
+//                                 Type:             openapiv2.TYPE_OAUTH2,
+//                                 Flow:             openapiv2.FLOW_ACCESS_CODE,
+//                                 Description:      "Access to accounts resources is restricted to authenticated users. The authentication process follows the Authorization Code flow.",
+//                                 AuthorizationURL: "/v1/auth",
+//                                 TokenURL:         "/v1/token",
+//                                 Scopes: openapiv2.Scopes{
+//                                         Scope: map[string]string{
+//                                                 "read":  "Grants read access",
+//                                                 "write": "Grants write access",
+//                                         },
+//                                 },
+//                         },
+//                 },
+//         },
+// }
 package accounts
 
 import (
@@ -172,6 +221,30 @@ type AccountService interface {
 	//         Tags:        []string{"Account"},
 	//         Description: "Retrieves all data from an account, selected by the account_id you supplied.",
 	//         Summary:     "Retrieve an account",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "200": openapiv2.Response{
+	//                         Description: "Request executed successfully.",
+	//                         Schema: openapiv2.Schema{
+	//                                 JSONSchema: openapiv2.JSONSchema{
+	//                                         Ref: "#/definitions/accountsAccount",
+	//                                 },
+	//                         },
+	//                 },
+	//                 "404": openapiv2.Response{
+	//                         Description: "Returned when the resource is not found.",
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "read",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	GetAccount(GetAccountRequest) Account
 
@@ -185,6 +258,27 @@ type AccountService interface {
 	//         Tags:        []string{"Account"},
 	//         Description: "Returns a list containing up to 20 accounts. You can paginate through account by supplying next_starting_index in your subsequents calls. next_starting_index contains the account_id of the last account_id of the current page.",
 	//         Summary:     "List all accounts",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "200": openapiv2.Response{
+	//                         Description: "Request executed successfully.",
+	//                         Schema: openapiv2.Schema{
+	//                                 JSONSchema: openapiv2.JSONSchema{
+	//                                         Ref: "#/definitions/accountsGetAccountsResponse",
+	//                                 },
+	//                         },
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "read",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	GetAccounts(GetAccountsRequest) GetAccountsResponse
 
@@ -199,6 +293,27 @@ type AccountService interface {
 	//         Tags:        []string{"Account"},
 	//         Description: "Creates a new account",
 	//         Summary:     "Create an account",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "201": openapiv2.Response{
+	//                         Description: "Account created successfully.",
+	//                         Schema: openapiv2.Schema{
+	//                                 JSONSchema: openapiv2.JSONSchema{
+	//                                         Ref: "#/definitions/accountsCreateAccountResponse",
+	//                                 },
+	//                         },
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "write",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	CreateAccount(CreateAccountRequest) CreateAccountResponse
 
@@ -213,6 +328,22 @@ type AccountService interface {
 	//         Tags:        []string{"Account"},
 	//         Description: "Updates an account with all the fields supplied.",
 	//         Summary:     "Update an account",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "204": openapiv2.Response{
+	//                         Description: "Account updated successfully.",
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "write",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	UpdateAccount(UpdateAccountRequest)
 
@@ -226,6 +357,22 @@ type AccountService interface {
 	//         Tags:        []string{"Account"},
 	//         Description: "Permanently delete an account.",
 	//         Summary:     "Delete an account",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "204": openapiv2.Response{
+	//                         Description: "Account deleted successfully.",
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "write",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	DeleteAccount(DeleteAccountRequest)
 }

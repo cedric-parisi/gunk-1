@@ -1,3 +1,52 @@
+// +gunk openapiv2.Swagger{
+//         Swagger: "2.0",
+//         Info: openapiv2.Info{
+//                 Title:       "Transactions API",
+//                 Description: "Provides create and read operations on the transaction resource.",
+//                 Version:     "1.0.0",
+//         },
+//         BasePath: "/v1",
+//         Schemes: []openapiv2.SwaggerScheme{
+//                 openapiv2.HTTPS,
+//         },
+//         Consumes: []string{
+//                 "application/json",
+//         },
+//         Produces: []string{
+//                 "application/json",
+//         },
+//         Responses: map[string]openapiv2.Response{
+//                 "400": openapiv2.Response{
+//                         Description: "Returned when the request body is malformatted or does not match the expected request.",
+//                 },
+//                 "401": openapiv2.Response{
+//                         Description: "Returned when the request does not contains the user's credentials.",
+//                 },
+//                 "403": openapiv2.Response{
+//                         Description: "Returned when the user does not have permission to access the resource.",
+//                 },
+//                 "500": openapiv2.Response{
+//                         Description: "Returned when an unexpected error occured on the server side.",
+//                 },
+//         },
+//         SecurityDefinitions: openapiv2.SecurityDefinitions{
+//                 Security: map[string]openapiv2.SecurityScheme{
+//                         "OAuth2": openapiv2.SecurityScheme{
+//                                 Type:             openapiv2.TYPE_OAUTH2,
+//                                 Flow:             openapiv2.FLOW_ACCESS_CODE,
+//                                 Description:      "Access to transactions resources is restricted to authenticated users. The authentication process follows the Authorization Code flow.",
+//                                 AuthorizationURL: "/v1/auth",
+//                                 TokenURL:         "/v1/token",
+//                                 Scopes: openapiv2.Scopes{
+//                                         Scope: map[string]string{
+//                                                 "read":  "Grants read access",
+//                                                 "write": "Grants write access",
+//                                         },
+//                                 },
+//                         },
+//                 },
+//         },
+// }
 package transactions
 
 import (
@@ -118,6 +167,25 @@ type TransactionService interface {
 	//         Tags:        []string{"Transaction"},
 	//         Description: "Retrieves all data from a transaction, selected by the transaction_id you supplied.",
 	//         Summary:     "Retrieve a transaction",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "200": openapiv2.Response{
+	//                         Description: "Request executed successfully.",
+	//                 },
+	//                 "404": openapiv2.Response{
+	//                         Description: "Returned when the resource is not found.",
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "read",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	GetTransaction(GetTransactionRequest) Transaction
 
@@ -131,6 +199,22 @@ type TransactionService interface {
 	//         Tags:        []string{"Transaction"},
 	//         Description: "Returns a list containing up to 20 transactions. You can paginate through transactions by supplying next_starting_index in your subsequents calls. next_starting_index contains the transaction_id of the last transaction_id of the current page.",
 	//         Summary:     "List all transactions",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "200": openapiv2.Response{
+	//                         Description: "Request executed successfully.",
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "read",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	GetTransactions(GetTransactionsRequest) GetTransactionsResponse
 
@@ -145,6 +229,22 @@ type TransactionService interface {
 	//         Tags:        []string{"Transaction"},
 	//         Description: "Creates a new transaction and returns its id.",
 	//         Summary:     "Create a transaction",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "201": openapiv2.Response{
+	//                         Description: "Transaction created successfully.",
+	//                 },
+	//         },
+	//         Security: []openapiv2.SecurityRequirement{
+	//                 {
+	//                         SecurityRequirement: map[string]openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                 "OAuth2": openapiv2.SecurityRequirement_SecurityRequirementValue{
+	//                                         Scope: []string{
+	//                                                 "write",
+	//                                         },
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	CreateTransaction(CreateTransactionRequest) CreateTransactionResponse
 }

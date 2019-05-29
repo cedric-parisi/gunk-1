@@ -1,11 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "transactions",
-    "version": "0.1.0"
+    "title": "Transactions API",
+    "description": "Provides create and read operations on the transaction resource.",
+    "version": "1.0.0"
   },
+  "basePath": "/v1",
   "schemes": [
-    "http",
     "https"
   ],
   "consumes": [
@@ -22,10 +23,24 @@
         "operationId": "GetTransactions",
         "responses": {
           "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/transactionsGetTransactionsResponse"
-            }
+            "description": "Request executed successfully.",
+            "schema": {}
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -39,6 +54,13 @@
         ],
         "tags": [
           "Transaction"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "read"
+            ]
+          }
         ]
       },
       "post": {
@@ -47,10 +69,30 @@
         "operationId": "CreateTransaction",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/transactionsCreateTransactionResponse"
             }
+          },
+          "201": {
+            "description": "Transaction created successfully.",
+            "schema": {}
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -65,6 +107,13 @@
         ],
         "tags": [
           "Transaction"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "write"
+            ]
+          }
         ]
       }
     },
@@ -75,10 +124,28 @@
         "operationId": "GetTransaction",
         "responses": {
           "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/transactionsTransaction"
-            }
+            "description": "Request executed successfully.",
+            "schema": {}
+          },
+          "400": {
+            "description": "Returned when the request body is malformatted or does not match the expected request.",
+            "schema": {}
+          },
+          "401": {
+            "description": "Returned when the request does not contains the user's credentials.",
+            "schema": {}
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource is not found.",
+            "schema": {}
+          },
+          "500": {
+            "description": "Returned when an unexpected error occured on the server side.",
+            "schema": {}
           }
         },
         "parameters": [
@@ -92,6 +159,13 @@
         ],
         "tags": [
           "Transaction"
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "read"
+            ]
+          }
         ]
       }
     }
@@ -419,6 +493,19 @@
       ],
       "default": "_",
       "description": "MajorType describes the type of the account.\n\n - Checking: MajorType_Checking account.\n - Saving: MajorType_Saving account.\n - TimeDeposit: MajorType_TimeDeposit for a time deposit account.\n - CommercialLoan: MajorType_CommercialLoan for a business loan account.\n - MortgageLoan: MajorType_MortgageLoan for a home loan account.\n - ConsumerLoan: MajorType_ConsumerLoan for a consumer loan account."
+    }
+  },
+  "securityDefinitions": {
+    "OAuth2": {
+      "type": "oauth2",
+      "description": "Access to transactions resources is restricted to authenticated users. The authentication process follows the Authorization Code flow.",
+      "flow": "accessCode",
+      "authorizationUrl": "/v1/auth",
+      "tokenUrl": "/v1/token",
+      "scopes": {
+        "read": "Grants read access",
+        "write": "Grants write access"
+      }
     }
   }
 }

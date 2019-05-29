@@ -1,3 +1,35 @@
+// +gunk openapiv2.Swagger{
+//         Swagger: "2.0",
+//         Info: openapiv2.Info{
+//                 Title:       "Auth API",
+//                 Description: "In order to interact with openbank APIs, you must be authenticated. This API provides the needed endpoints to retrieve an authorization code, exchange it against an access token and refresh an access token.",
+//                 Version:     "1.0.0",
+//         },
+//         BasePath: "/v1",
+//         Schemes: []openapiv2.SwaggerScheme{
+//                 openapiv2.HTTPS,
+//         },
+//         Consumes: []string{
+//                 "application/json",
+//         },
+//         Produces: []string{
+//                 "application/json",
+//         },
+//         Responses: map[string]openapiv2.Response{
+//                 "400": openapiv2.Response{
+//                         Description: "Returned when the request body is malformatted or does not match the expected request.",
+//                 },
+//                 "401": openapiv2.Response{
+//                         Description: "Returned when the request does not contains the user's credentials.",
+//                 },
+//                 "403": openapiv2.Response{
+//                         Description: "Returned when the user does not have permission to access the resource.",
+//                 },
+//                 "500": openapiv2.Response{
+//                         Description: "Returned when an unexpected error occured on the server side.",
+//                 },
+//         },
+// }
 package auth
 
 import (
@@ -65,6 +97,11 @@ type AuthorizationService interface {
 	//         Tags:        []string{"Authorization"},
 	//         Description: "First you need to retrieve an authorization code.",
 	//         Summary:     "Retrieve an authorization code.",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "200": openapiv2.Response{
+	//                         Description: "Request executed successfully.",
+	//                 },
+	//         },
 	// }
 	GetAuthorizationCode(GetAuthorizationCodeRequest) Empty
 
@@ -79,6 +116,16 @@ type AuthorizationService interface {
 	//         Tags:        []string{"Authorization"},
 	//         Description: "Then you can exchange the authorization code with an access token. This endpoint is also used to refresh your tokens.",
 	//         Summary:     "Retrieve an access token.",
+	//         Responses: map[string]openapiv2.Response{
+	//                 "201": openapiv2.Response{
+	//                         Description: "Request executed successfully.",
+	//                         Schema: openapiv2.Schema{
+	//                                 JSONSchema: openapiv2.JSONSchema{
+	//                                         Ref: "#/definitions/authCreateAccessTokenResponse",
+	//                                 },
+	//                         },
+	//                 },
+	//         },
 	// }
 	CreateAccessToken(CreateAccessTokenRequest) CreateAccessTokenResponse
 }
